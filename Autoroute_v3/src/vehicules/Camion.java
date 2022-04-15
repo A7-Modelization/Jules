@@ -21,7 +21,7 @@ public class Camion extends Entites{
 		super.hauteur = Constantes.HAUTEUR_CAMION;
 		super.dy = 0;
 		super.dx = vitesseRelativeCamion;
-		super.dxinit = vitesseRelativeCamion;
+		super.dxinit =vitesseRelativeCamion;
 
 		}
 }

@@ -67,12 +67,12 @@ public abstract class Entites {
 	
 	public int deplacement() {
 		// Renvoie la nouvelle position de la voiture 
-		this.yPos = this.yPos + this.dy;
-		return this.yPos;
+		this.xPos = this.xPos + this.dx;
+		return this.xPos;
 	}
 	public int freinage() {
-		this.dy = this.dy - 1;
-		return this.dy;
+		this.dx = this.dx - 1;
+		return this.dx;
 	}
 	
 }

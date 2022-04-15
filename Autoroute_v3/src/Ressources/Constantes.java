@@ -4,7 +4,7 @@ public abstract class Constantes {
 
 	/*******************FENETRE*******************/
 	// Dimensions de la fenetre d'animation
-	public static final int LARGEUR_FENETRE = 300;
+	public static final int LARGEUR_FENETRE = 1500;
 	public static final int HAUTEUR_FENETRE = 600;
 	public static final int MARGE_FENETRE = 50;
 	
@@ -38,7 +38,7 @@ public abstract class Constantes {
 	
 	// Dimensions du camion
 	public static final int LARGEUR_CAMION = 40;
-	public static final int HAUTEUR_CAMION = 80;
+	public static final int HAUTEUR_CAMION = 120;
 	
 	// Dimension de la voiture
 	public static final int LARGEUR_VOITURE = 40;
@@ -50,7 +50,7 @@ public abstract class Constantes {
 	
 	public static int VITESSE_RELATIVE_VOITURE_MIN = -2;
 	public static int VITESSE_RELATIVE_VOITURE_MAX = 2;
-	
+	 
 	public static int VITESSE_RELATIVE_MOTO_MIN = -1;
 	public static int VITESSE_RELATIVE_MOTO_MAX = 3;
 	
@@ -59,7 +59,7 @@ public abstract class Constantes {
 	
 	/******************TEMPS*******************/
 	// Temps de la boucle
-	public static final int TEMPS_BOUCLE = 5; // 5 ms
+	public static final int TEMPS_BOUCLE = 20; // 5 ms
 	public static final int NOMBRE_BOUCLES = 250;
 	
 }

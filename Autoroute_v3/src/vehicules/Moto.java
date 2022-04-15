@@ -8,7 +8,7 @@ import entites.RandomValeur;
 public class Moto extends Entites{
 /**** VARIABLES ****/
 	public static int vitesseRelativeMoto = RandomValeur.randomVitesse(Constantes.VITESSE_RELATIVE_MOTO_MIN, Constantes.VITESSE_RELATIVE_MOTO_MAX);
-	public static int VitesseCamion =90 + 10*vitesseRelativeMoto;
+	public static int VitesseMoto =90 + 10*vitesseRelativeMoto;
 	
 	/**** CONSTRUCTEUR ****/
 		
