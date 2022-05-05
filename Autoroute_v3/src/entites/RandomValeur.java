@@ -5,9 +5,6 @@ public class RandomValeur {
 
 	public static int randomVitesse(int vitesseRelativeMin, int vitesseRelativeMax) {
 		// renvoie une vitesse int qui est entre vitesseMin et vitesseMax
-		return vitesseRelativeMin + (int)(Math.random())*(vitesseRelativeMax - vitesseRelativeMin + 1);
+		return vitesseRelativeMin + (int)(Math.random())*(vitesseRelativeMax - vitesseRelativeMin +1);
 	}
-
-	
-
 }

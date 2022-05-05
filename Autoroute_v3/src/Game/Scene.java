@@ -57,8 +57,8 @@ public Trafic trafic;
 		trafic.gestion();
 		
 		g2.setColor(Color.RED);
-		int l = trafic.listev1.size();
-		for(int i=0; i<l ; i++) {
+		int l1 = trafic.listev1.size();
+		for(int i=0; i<l1 ; i++) {
 			Entites vehicule = trafic.listev1.get(i);
 			g2.fillRect(vehicule.deplacement(), vehicule.getyPos(), vehicule.getHauteur(), vehicule.getLargeur());
 		}

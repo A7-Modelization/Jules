@@ -70,9 +70,9 @@ public abstract class Entites {
 		this.xPos = this.xPos + this.dx;
 		return this.xPos;
 	}
-	public int freinage() {
+/**	public int freinage() {
 		this.dx = this.dx - 1;
 		return this.dx;
-	}
+	}**/
 	
 }
