@@ -25,7 +25,7 @@ public abstract class Constantes {
 	public final static int Y_POS_USER = 250;	
 	
 	// Unit de dplacement de la voiture de l'utilisateur
-	public final static int DX_USER = 2;
+	public final static int DX_USER = 0;
 	
 	// Limite de d�placement de la voiture de l'utilisateur
 	public final static int LIMITE_GAUCHE_USER = 30;

@@ -29,6 +29,11 @@ public class Trafic {
 		listev2= new LinkedList<Entites>();
 		listev3= new LinkedList<Entites>();
 		for (int i=1; i<1000; i++) {
+			if (i==500) {
+				user= new User();
+				listev2.add(user);
+			}
+			else {
 			randfile = (int)(Math.random()*3);
 			randvehi = Math.random()*3;
 			if (randfile==0) {
@@ -52,14 +57,10 @@ public class Trafic {
 				listev3.add(vehicule);
 				}	
 			}
-		user= new User();
-		listev2.add(user);
+		}
 	}
-
-
 	
-	@SuppressWarnings("rawtypes")
-	public LinkedList voie(int i) {
+	public LinkedList<Entites> voie(int i) {
 		if (i>0 && i<150) {
 			return listev1;
 		} else if (i>=150 && i<350) {
@@ -70,111 +71,56 @@ public class Trafic {
 	}
 	
 	
-	
-	
-	public void freinage(Entites A, Entites B) {
-		//programme qui déteremine si la voiture A doit freiner pour ne pas rentrer en collision avec la voiture B
-		if (A.getxPos()-B.getxPos()< 1.2*B.getHauteur() && A.getDx()<B.getDx()) /*freinage d'urgence*/ {
-			A.setDx(A.getDx()+5);
-		} else if (A.getxPos()-B.getxPos()< 1.7*B.getHauteur() && A.getDx()<B.getDx())/*freinage normal*/ {
-			A.setDx(A.getDx()+2);
-		} else if (A.getxPos()-B.getxPos()> 2*B.getHauteur() && A.getDx()>A.getDxinit()) {
-			A.setDx(A.getDx()-1); // Interessant si on pouvait mettre +0.2 ou alors augmenter échelle des possibilités de vitesse
-		}
-		
-	}
-	public static int binarySearchWide(LinkedList<Entites> L, int f, int l, int val1, int val2){
-	    if (l >= f){
+	public static int[] binarySearchWide(LinkedList<Entites> L, int f, int l, int pos, int val1, int val2){
+		int[] L1 =new int[2];
+		if (l >= f){
 	      int mid = (int)f + (l - f)/2;
-	      if (L.get(mid).getxPos() >val1 && L.get(mid).getxPos() < val2){
-	        return 15000;
+	      if (L.get(mid).getxPos() > pos && L.get(mid +1).getxPos() < pos){
+	    	  if((L.get(mid).getxPos()> val1 && L.get(mid).getxPos()< val2) || (L.get(mid+1).getxPos()> val1 && L.get(mid+1).getxPos()< val2)) {
+	    		  L1[0]=0;
+	    		  L1[1]=mid;
+	    		  return L1;
+	    		}
 	      }
-	      if (L.get(mid).getxPos() > val2){
-	        //recherche dans le sous-tableau à gauche
-	        return binarySearchWide(L, mid+1, l, val1, val2); 
+	      if (L.get(mid+1).getxPos() < pos){
+	        //recherche dans le sous-tableau ? gauche
+	        return binarySearchWide(L, mid+1, l, pos, val1, val2); 
 	      }else{
-	        //recherche dans le sous-tableau à droit
-	        return binarySearchWide(L, f, mid-1, val1, val2); 
+	        //recherche dans le sous-tableau ? droit
+	        return binarySearchWide(L, f, mid-1, pos, val1, val2); 
 	      }
 	    }
-	    return (int)f + (l - f)/2;
+	    L1[0]=1;
+	    L1[1]=(int)f + (l - f)/2;
+		return L1;
 	   }
+
 	
-	public static int binarySearch(LinkedList<Entites> L1, int first, int last, int key){  
-        if (last>=first){  
-            int mid = first + (last - first)/2;  
-            if (L1.get(mid).getxPos() == key){  
-            return mid;  
-            }  
-            if (L1.get(mid).getxPos() > key){  
-            return binarySearch(L1, first, mid-1, key);//search in left subarray  
-            }else{  
-            return binarySearch(L1, mid+1, last, key);//search in right subarray  
-            }  
-        }  
-        return -1;
-	}
-	
-	public int depassement(Entites A, Entites B) {
-		//détermine si la j-eme voiture de la liste peut dépasser celle qui est devant elle
-		// renvoie l'indice de la voiture devant laquelle elle sera si elle change de file
-		if (A.getyPos()>260) {
-			return 15000;
+	public int[] voiture_a_gauche(Entites A) {
+		int[] L =new int[2];
+		if (A.getyPos()>350) {
+			L[0]=0;
+			L[1]=-1;
+			return L;
 		}
-		//randdep= Math.random()*2;
-		if (A.getDx()-B.getDx()<0)/** || randdep<1)**/ {
-			int h=binarySearchWide(voie(A.getyPos()),0,voie(A.getyPos()).size()-1,A.getxPos()-70,A.getxPos()+70);
-			if (h!=15000) {return h;}
+		int [] h= binarySearchWide(voie(A.getyPos()+200),0,voie(A.getyPos()).size(),A.getxPos(),A.getxPos()+2*A.getHauteur(),A.getxPos()-3*A.getHauteur());
+		return h;
+	}
+	
+	public int[] voiture_a_droite(Entites A) {
+		int[] L=new int[2];
+		if (A.getyPos() <150) {
+			L[0]=0;
+			L[1]=-1;
+			return L;
 		}
-		return 15000;
+	    return binarySearchWide(voie(A.getyPos()-200),0,voie(A.getyPos()).size(),A.getxPos(),A.getxPos()+2*A.getHauteur(),A.getxPos()-3*A.getHauteur());
+}
+	public void vitesse_croisiere(Entites A, int a) {
+		int c = binarySearchWide(voie(A.getyPos()),0,voie(A.getyPos()).size(),A.getxPos(),A.getxPos()+1,A.getxPos()-1)[0];
+		if (voie(A.getyPos()).get(c+1).getxPos()<A.getxPos() - a && A.getDx() < A.getDxinit()) {A.setDx(A.getDx()-1);}; 
 	}
-	public void changement_voie(int ancien, int nouveau, LinkedList<Entites> L1, LinkedList<Entites> L2) {
-		L2.add(nouveau, L1.get(ancien));
-		L1.remove(ancien);
-		L2.get(nouveau).setyPos(L2.get(nouveau).getyPos()+200);
-		/**for (int i=0; i<100;i++) {
-			L2.get(nouveau).setyPos(L2.get(nouveau).getyPos()+2);
-		}**/
-	}	
 	
-	public void gestion() {
 	
-	// gestion distance inter-vehicules + gestion dépassements
-		for (int i=1;i<listev1.size()-1;i++) {
-			freinage(listev1.get(i),listev1.get(i+1));
-			int h=depassement(listev1.get(i),listev1.get(i+1));
-			if (h!=15000){
-				while (listev1.get(i).getxPos()>listev2.get(h).getxPos() || listev1.get(i).getxPos()<listev2.get(h+1).getxPos()) {
-					if (listev1.get(i).getxPos()>listev2.get(h).getxPos()) {
-						h=h-1;
-					} else {
-						h=h+1;
-					}
-				}
-				changement_voie(i,h,listev1,listev2);
-			}
-			}
-		for (int i=1;i<listev2.size()-1;i++) {
-			freinage(listev2.get(i),listev2.get(i+1));
-			int h=depassement(listev2.get(i),listev2.get(i+1));
-			if (h!=15000){
-				while (listev2.get(i).getxPos()>listev3.get(h).getxPos() || listev2.get(i).getxPos()<listev3.get(h+1).getxPos()) {
-					if (listev2.get(i).getxPos()>listev3.get(h).getxPos()) {
-						h=h-1;
-					} else {
-						h=h+1;
-					}
-				}
-				changement_voie(i,h,listev2,listev3);
-			}
-			}
-		for (int i=1;i<listev3.size()-1;i++) {
-			freinage(listev3.get(i),listev3.get(i+1));
-			}
-	}
-
-
-
-
 }
 
