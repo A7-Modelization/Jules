@@ -77,7 +77,7 @@ public class Trafic {
 	      int mid = (int)f + (l - f)/2;
 	      if (L.get(mid).getxPos() > pos && L.get(mid +1).getxPos() < pos){
 	    	  if((L.get(mid).getxPos()> val1 && L.get(mid).getxPos()< val2) || (L.get(mid+1).getxPos()> val1 && L.get(mid+1).getxPos()< val2)) {
-	    		  L1[0]=0;
+	    		  L1[0]=1;
 	    		  L1[1]=mid;
 	    		  return L1;
 	    		}
@@ -90,7 +90,7 @@ public class Trafic {
 	        return binarySearchWide(L, f, mid-1, pos, val1, val2); 
 	      }
 	    }
-	    L1[0]=1;
+	    L1[0]=0;
 	    L1[1]=(int)f + (l - f)/2;
 		return L1;
 	   }
@@ -99,7 +99,7 @@ public class Trafic {
 	public int[] voiture_a_gauche(Entites A) {
 		int[] L =new int[2];
 		if (A.getyPos()>350) {
-			L[0]=0;
+			L[0]=1;
 			L[1]=-1;
 			return L;
 		}
@@ -110,7 +110,7 @@ public class Trafic {
 	public int[] voiture_a_droite(Entites A) {
 		int[] L=new int[2];
 		if (A.getyPos() <150) {
-			L[0]=0;
+			L[0]=1;
 			L[1]=-1;
 			return L;
 		}
